@@ -1,0 +1,137 @@
+<!-- Из шаблона в компонент ================================ -->
+
+<!-- <button (click)="addCar()">Добавить машину</button>
+<p>{{addCarStatus}}</p>
+<hr>
+<app-car></app-car>
+<app-car></app-car>
+
+<hr>
+
+<input type="text" (keyup.enter)="onKeyUp($event)">
+<p>{{inputText}}</p> -->
+
+<!-- В обе стороны ================================== -->
+
+<!-- <button (click)="addCar()">Добавить машину</button>
+<p>{{addCarStatus}}</p>
+<hr>
+<app-car></app-car>
+<app-car></app-car>
+
+<hr>
+
+<input type="text" (keyup.enter)="onKeyUp($event)"><br>
+<input type="text" [(ngModel)]="inputText">
+<p>{{inputText}}</p> -->
+
+
+<!-- Основные директивы -->
+
+
+<!-- ngIf -->
+
+<!-- <input type="text" [(ngModel)]="carName">
+<button (click)="addCar()">Добавить машину</button>
+<p *ngIf="!addCarStatus; else successStatus">Машина не добавлена</p>
+<ng-template #successStatus>
+    <p>Машина добавлена</p>
+</ng-template>
+<hr>
+<app-car></app-car>
+<app-car></app-car> -->
+
+
+
+<!-- ngFor -->
+
+<!-- <input type="text" [(ngModel)]="carName">
+<button (click)="addCar()">Добавить машину</button>
+<p *ngIf="!addCarStatus; else successStatus">Машина не добавлена</p>
+<ng-template #successStatus>
+    <p>Машина добавлена</p>
+</ng-template>
+<hr>
+
+<app-car *ngFor="let car of cars"></app-car>
+
+<ul>
+    <li *ngFor="let item of items; let idx = index">
+        <b>{{idx + 1}}</b> - <i>{{item.name}}</i>
+    </li>
+</ul> -->
+
+
+<!-- ngStyle -->
+
+<!-- <input type="text" [(ngModel)]="carName">
+<button (click)="addCar()">Добавить машину</button>
+<p *ngIf="!addCarStatus; else successStatus">Машина не добавлена</p>
+<ng-template #successStatus>
+    <p>Машина добавлена</p>
+</ng-template>
+<hr>
+
+<!-- <app-car *ngFor="let car of cars"></app-car> -->
+
+<!-- <ul>
+    <li *ngFor="let car of cars; let idx = index">
+        <div [ngStyle]="{'background-color': (idx + 1) % 2 === 0 ? 'red' : 'green', 'color': 'white'}">
+            <b>{{idx + 1}}</b> -
+            {{car}}
+        </div>
+    </li>
+</ul>  -->
+
+
+<!-- ngClass -->
+
+<!-- <input type="text" [(ngModel)]="carName">
+<button (click)="addCar()">Добавить машину</button>
+<p *ngIf="!addCarStatus; else successStatus">Машина не добавлена</p>
+<ng-template #successStatus>
+    <p>Машина добавлена</p>
+</ng-template>
+<hr>
+
+<!-- <app-car *ngFor="let car of cars"></app-car> -->
+
+<!-- <ul>
+    <li *ngFor="let car of cars; let idx = index">
+        <div [ngStyle]="{'background-color': (idx + 1) % 2 === 0 ? 'red' : 'green', 'color': 'white'}"
+            [ngClass]="{'bigText': setBigCarText(car)}">
+            <b>{{idx + 1}}</b> - {{car}}
+        </div>
+    </li>
+</ul> -->
+
+
+
+<!-- Pipes (Пайпы) 'date', 'uppercase'-->
+
+<!-- <input type="text" [(ngModel)]="carName">
+<button (click)="addCar()">Добавить машину</button>
+<p *ngIf="!addCarStatus; else successStatus">Машина не добавлена</p>
+<ng-template #successStatus>
+    <p>Машина добавлена</p>
+</ng-template>
+<hr> -->
+
+<!-- <app-car *ngFor="let car of cars"></app-car> -->
+
+<!-- <ul>
+    <li *ngFor="let date of dates; let idx = index">
+        <div>
+            <b>{{idx + 1}}</b> - {{ date | uppercase}};
+        </div>
+    </li>
+</ul> -->
+
+
+
+<!-- ============================================================== -->
+
+<app-add-car (onAddCar)="updateCarList($event)"></app-add-car>
+<hr>
+<!-- [] -->
+<app-car *ngFor="let car of cars" [carItem]="car"></app-car>
