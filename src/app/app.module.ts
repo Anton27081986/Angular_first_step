@@ -11,6 +11,7 @@ import { CarComponent } from './car/car.component';
 import { AddCarComponent } from './add-car/add-car.component';
 import { BackgroundDirective } from './directives/background.directive';
 import { PowPipe } from './pow.pipe';
+import { CarFilterPipe } from './car-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PowPipe } from './pow.pipe';
     CarComponent,
     AddCarComponent,
     BackgroundDirective,
-    PowPipe
+    PowPipe,
+    CarFilterPipe
   ],
   imports: [
     BrowserModule,
