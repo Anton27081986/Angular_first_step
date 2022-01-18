@@ -1,3 +1,5 @@
-<input type="text" [(ngModel)]="carName">
-<input type="text" [(ngModel)]="carsYear">
-<button (click)="addCar()">Добавить машину</button>
+<!-- <input type="text" [(ngModel)]="carName"> -->
+<input type="text" #carNameInput>
+<!-- <input type="text" [(ngModel)]="carsYear"> -->
+<input type="text" #carYearInput>
+<button (click)="addCar(carNameInput)">Добавить машину</button>

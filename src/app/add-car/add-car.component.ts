@@ -1,4 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    Output,
+    EventEmitter,
+    ViewChild,
+    ElementRef
+} from '@angular/core';
 
 interface ICars {
     name: string,
@@ -12,10 +19,12 @@ interface ICars {
 })
 
 export class AddCarComponent implements OnInit {
-    carName = '';
-    carsYear = 2017;
+    // carName = '';
+    // carsYear = 2017;
     // onAddCar = new EventEmitter();
-    @Output() onAddCar = new EventEmitter<ICars>();
+    // @Output('on') onAddCar = new EventEmitter<ICars>();
+    @Output('onAddCar') carEmitter = new EventEmitter<ICars>();
+    @ViewChild('carYearInput') carYearInput: ElementRef;
 
 
     constructor() { }
@@ -23,12 +32,14 @@ export class AddCarComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    addCar() {
-        this.onAddCar.emit({
-            name: this.carName,
-            year: this.carsYear
+    addCar(carNameEl: HTMLInputElement) {
+
+        this.carEmitter.emit({
+            name: carNameEl.value,
+            year: +this.carYearInput.nativeElement.value
         });
-        this.carName = '';
-        this.carsYear = 2017;
+
+        carNameEl.value = '';
+        this.carYearInput.nativeElement.value = 2017;
     }
 }

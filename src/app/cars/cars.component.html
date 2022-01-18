@@ -131,7 +131,20 @@
 
 <!-- ============================================================== -->
 
+
+<p>Форма добавления машины</p>
+<hr>
 <app-add-car (onAddCar)="updateCarList($event)"></app-add-car>
 <hr>
+
+<button (click)="changeCarName()">Изенить машину</button>
+<button (click)="deleteCarName()">Удалить машину</button>
+
+<hr>
 <!-- [] -->
-<app-car *ngFor="let car of cars" [carItem]="car"></app-car>
+<div>
+    <app-car *ngFor="let car of cars" [carItem]="car" [name]="car.name">
+        <h4 #carHeading>Название: {{car.name}}</h4>
+        <p>Год: {{car.year}}</p>
+    </app-car>
+</div>
