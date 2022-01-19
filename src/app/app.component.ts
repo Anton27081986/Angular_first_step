@@ -1,45 +1,19 @@
-import { Component } from '@angular/core';
-// import 'rxjs/Rx';
-// import { Observable } from 'rxjs'
-import { of } from 'rxjs'
+import { Component, OnInit } from '@angular/core';
+import { CarsService } from './cars.service';
 
 @Component({
     selector: 'app-root',
-    template: `
-    <div>
-        <h1>{{ title }}</h1>
-        <input type="text" [(ngModel)]="searchCar">
-        <button (click)="addCar()">Добавить</button>
-        <hr>
-        
-        <ul *ngFor="let car of cars | carFilter:searchCar:'name'; let i = index">
-            <li><b>{{ i + 1 }}</b> {{ car.name }} <i>{{car.descr}}</i></li>
-        </ul>
-    </div>
-    `,
-    styleUrls: ['./app.component.css']
+    templateUrl: './app.component.html',
+    // styleUrls: ['./app.component.css']
+    providers: [CarsService]
 })
 
-export class AppComponent {
-    searchCar = '';
-    cars = [
-        { name: 'Ford', descr: 'wf 1' },
-        { name: 'Mazda', descr: 'wf 2' },
-        { name: 'Bently', descr: 'wf 3' },
-        { name: 'Audi', descr: 'wf 4' },
-        { name: 'Volvo', descr: 'wf 5' },
-        { name: 'BMW', descr: 'wf 6' },
-    ];
+export class AppComponent implements OnInit {
+    cars = [];
 
-    title = '';
+    constructor(private service: CarsService) { }
 
-    asyncTitle = of('Async title')
-        .subscribe((str) => this.title = str);
-
-    addCar() {
-        this.cars.push({
-            name: 'New Car',
-            descr: 'WF'
-        });
+    ngOnInit(): void {
+        this.cars = this.service.cars;
     }
 }

@@ -1,3 +1,7 @@
-<div>Эта машина продана {{ name }}</div>
-
-<ng-content></ng-content>
+<div (ngClass)="getClass()">
+    <h4 (ngStyle)="{marginBottom:'20px'}">{{ car.name }}</h4>
+    <div>
+        <button [disabled]="car.isSold" (click)="onAction('buy')">Купить</button>
+        <button [disabled]="!car.isSold" (click)="onAction('return')">Вернуть</button>
+    </div>
+</div>

@@ -1,78 +1,30 @@
-import {
-    AfterContentChecked,
-    AfterContentInit,
-    AfterViewChecked,
-    AfterViewInit,
-    Component,
-    ContentChild,
-    DoCheck,
-    ElementRef,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChange,
-    SimpleChanges,
-    ViewChild
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ConsoleService } from '../console.service';
 
 @Component({
     selector: 'app-car',
     templateUrl: './car.component.html',
-    styleUrls: ['./car.component.css']
+    styleUrls: ['./car.component.css'],
 })
 
-export class CarComponent implements
-    OnInit,
-    OnChanges,
-    DoCheck,
-    AfterContentInit,
-    AfterContentChecked,
-    AfterViewInit,
-    AfterViewChecked,
-    OnDestroy {
+export class CarComponent {
 
-    @Input('carItem') car!: { name: string, year: number };
-    @Input('name') name: string;
-    @ContentChild('carHeading') carHeading: ElementRef;
+    @Input() car;
 
-    constructor() {
-        console.log('constructor');
-    }
-
-    ngOnDestroy(): void {
-        console.log('ngOnDestroy');
+    constructor(private consoleService: ConsoleService) {
 
     }
 
-    ngAfterViewChecked(): void {
-        console.log('ngAfterViewChecked');
+    getClass() {
+        return {
+            'success': !this.car.isSold,
+            'danger': this.car.isSold,
+            'true': true
+        }
     }
 
-    ngAfterViewInit(): void {
-        console.log('ngAfterViewInit');
+    onAction(type: string) {
+        this.car.isSold = type === 'buy' ? true : false;
+        this.consoleService.log(`${this.car.name} status ${type}`);
     }
-
-    ngAfterContentChecked(): void {
-        console.log('ngAfterContentChecked');
-    }
-
-    ngAfterContentInit(): void {
-        console.log('ngAfterContentInit');
-    }
-
-    ngDoCheck(): void {
-        console.log('doCheck');
-
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        console.log('ngOnChanges', changes);
-    }
-
-    ngOnInit() {
-        console.log('ngOnInit');
-    }
-
 }

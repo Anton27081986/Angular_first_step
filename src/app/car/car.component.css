@@ -1,1 +1,11 @@
+.success {
+    background: greenyellow;
+}
 
+.danger {
+    background: red;
+}
+
+.true {
+    background: rosybrown;
+}
