@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { CarsService } from './cars.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     // styleUrls: ['./app.component.css']
-    providers: [CarsService]
 })
 
-export class AppComponent implements OnInit {
-    cars = [];
+export class AppComponent {
+    answers = [{
+        type: 'yes',
+        text: 'Да'
+    }, {
+        type: 'no',
+        text: 'Нет'
+    }];
 
-    constructor(private service: CarsService) { }
+    submitForm(form: NgForm) {
+        console.log('submited', form);
 
-    ngOnInit(): void {
-        this.cars = this.service.cars;
     }
 }

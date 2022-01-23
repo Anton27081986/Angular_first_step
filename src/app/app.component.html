@@ -1,6 +1,26 @@
 <div>
-    <app-add-car></app-add-car>
-    <div>
-        <app-car *ngFor="let car of cars" [car]="car"></app-car>
-    </div>
+    <form (ngSubmit)="submitForm(form)" #form="ngForm">
+        <div>
+            <label>Email</label>
+            <input type="text" ngModel name="email">
+        </div>
+        <div>
+            <label>Пароль</label>
+            <input type="password" ngModel name="pass">
+        </div>
+        <div>
+            <label>Выберете страну</label>
+            <select ngModel name="country">
+                <option value="ru">Россия</option>
+                <option value="by">Беларусь</option>
+                <option value="ua">Украина</option>
+            </select>
+        </div>
+        <div *ngFor="let ans of answers">
+            <label>
+                <input type="radio" [value]="ans.type" ngModel name="answer"> {{ ans.text}}
+            </label>
+        </div>
+        <button type="submit">Сохранить</button>
+    </form>
 </div>
