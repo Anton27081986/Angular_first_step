@@ -1,22 +1,28 @@
 <div>
-    <form (ngSubmit)="submitForm()" #form="ngForm">
-        <div ngModelGroup="user" #user="ngModelGroup">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div formGroupName="user">
             <div>
                 <label>Email</label>
-                <input type="text" ngModel name="email" required email #email="ngModel">
-                <p *ngIf="email.invalid && email.touched">Введите коррктный Email</p>
-                <button type="button" (click)="addRandEmail()">Добавить случайный email</button>
+                <input type="text" formControlName="email">
+                <p *ngIf="form.get('user.email').invalid && form.get('user.email').touched">
+                    <span *ngIf="form.get('user.email').errors['email']">Введен не корректный email</span>
+                    <span *ngIf="form.get('user.email').errors['emailIsUsed']">Такой email уже зарестрирован</span>
+                </p>
             </div>
             <div>
                 <label>Пароль</label>
-                <input type="password" ngModel name="pass" required #password="ngModel">
-                <p *ngIf="password.invalid && password.touched">Введите коррктный пароль</p>
+                <input type="password" formControlName="pass">
+                <p *ngIf="form.get('user.pass').invalid && form.get('user.pass').touched">
+                    <span *ngIf="form.get('user.pass').errors['required']">Пароль не должен быть пустым</span><br>
+                    <span *ngIf="form.get('user.pass').errors['lengthError']">Пароль не может быть меньше
+                        {{charsCount}}х
+                        символов</span>
+                </p>
             </div>
-            <p *ngIf="user.invalid && user.touched">Данные пользователя введены не корректно</p>
         </div>
         <div>
             <label>Выберете страну</label>
-            <select [ngModel]="defauitCountry" name="country" required>
+            <select name="country" formArrayName="country">
                 <option value="ru">Россия</option>
                 <option value="by">Беларусь</option>
                 <option value="ua">Украина</option>
@@ -24,16 +30,9 @@
         </div>
         <div *ngFor="let ans of answers">
             <label>
-                <input type="radio" [value]="ans.type" [ngModel]="defaultAnswer" name="answer" required> {{ ans.text}}
+                <input type="radio" [value]="ans.type" name="answer" formControlName="answer"> {{ ans.text}}
             </label>
         </div>
-        <button type="submit" [disabled]="!form.valid">Сохранить</button>
+        <button type="submit" [disabled]="form.invalid">Сохранить</button>
     </form>
-
-    <div *ngIf="isSubmited">
-        <pre>
-            {{ formData | json}}
-        </pre>
-    </div>
-
 </div>

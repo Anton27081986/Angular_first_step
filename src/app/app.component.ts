@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-root',
@@ -7,9 +7,7 @@ import { NgForm } from '@angular/forms';
     styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
-    @ViewChild('form') form: NgForm;
-
+export class AppComponent implements OnInit {
     answers = [{
         type: 'yes',
         text: 'Да'
@@ -18,33 +16,47 @@ export class AppComponent {
         text: 'Нет'
     }];
 
-    defaultAnswer = 'no';
-    defauitCountry = 'ua';
+    charsCount = 5;
 
-    formData = {};
-    isSubmited = false;
+    public form: FormGroup
 
-    addRandEmail() {
-        const randEmail = 'anton@gmail.com';
-        // this.form.setValue({
-        //     user: {
-        //         pass: '',
-        //         email: randEmail
-        //     },
-        //     country: '',
-        //     answer: ''
-        // })
-
-        this.form.form.patchValue({
-            user: { email: randEmail }
+    ngOnInit(): void {
+        this.form = new FormGroup({
+            user: new FormGroup({
+                email: new FormControl('', [Validators.email, Validators.required], this.checkForEmail),
+                pass: new FormControl('', [Validators.required, this.checkForLength.bind(this)]),
+            }),
+            country: new FormControl(''),
+            answer: new FormControl('no')
         })
     }
 
-    submitForm() {
-        this.isSubmited = true;
-        this.formData = this.form.value;
-        this.form.reset();
+    onSubmit() {
+        console.log('Submited', this.form);
     }
 
+    // {'errorCode': true}
+    // null || undefined
+    checkForLength(control: FormControl) {
+        if (control.value.length <= this.charsCount) {
+            return {
+                'lengthError': true
+            }
+        }
+        return null
+    }
 
+    checkForEmail(control: FormControl): Promise<any> {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (control.value === 'test@gmail.com') {
+                    resolve({
+                        'emailIsUsed': true
+                    });
+                } else {
+                    resolve(null);
+                }
+            }, 3000)
+        });
+    }
 }
