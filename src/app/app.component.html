@@ -1,38 +1,16 @@
 <div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div formGroupName="user">
-            <div>
-                <label>Email</label>
-                <input type="text" formControlName="email">
-                <p *ngIf="form.get('user.email').invalid && form.get('user.email').touched">
-                    <span *ngIf="form.get('user.email').errors['email']">Введен не корректный email</span>
-                    <span *ngIf="form.get('user.email').errors['emailIsUsed']">Такой email уже зарестрирован</span>
-                </p>
-            </div>
-            <div>
-                <label>Пароль</label>
-                <input type="password" formControlName="pass">
-                <p *ngIf="form.get('user.pass').invalid && form.get('user.pass').touched">
-                    <span *ngIf="form.get('user.pass').errors['required']">Пароль не должен быть пустым</span><br>
-                    <span *ngIf="form.get('user.pass').errors['lengthError']">Пароль не может быть меньше
-                        {{charsCount}}х
-                        символов</span>
-                </p>
-            </div>
-        </div>
-        <div>
-            <label>Выберете страну</label>
-            <select name="country" formArrayName="country">
-                <option value="ru">Россия</option>
-                <option value="by">Беларусь</option>
-                <option value="ua">Украина</option>
-            </select>
-        </div>
-        <div *ngFor="let ans of answers">
-            <label>
-                <input type="radio" [value]="ans.type" name="answer" formControlName="answer"> {{ ans.text}}
-            </label>
-        </div>
-        <button type="submit" [disabled]="form.invalid">Сохранить</button>
-    </form>
+    <h1>{{ appTitle | async }}</h1>
+    <input type="text" [(ngModel)]="carName">
+    <hr>
+    <button (click)="loadCars()">Показать машины</button>
+    <button (click)="addCar()">Добавить машину</button>
+    <hr>
+    <ul>
+        <li *ngFor="let car of cars | async">
+            <span [ngStyle]="{background: car.color}">{{ car.id}} </span>
+            {{car.name}}
+            <button (click)="setNewColor(car)">Изменить цвет</button>
+            <button (click)="deleteCar(car)">Удалить</button>
+        </li>
+    </ul>
 </div>

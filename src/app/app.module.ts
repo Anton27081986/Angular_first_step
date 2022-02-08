@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 
@@ -11,7 +11,9 @@ import { AddCarComponent } from './add-car/add-car.component';
 import { BackgroundDirective } from './directives/background.directive';
 import { PowPipe } from './pow.pipe';
 import { CarFilterPipe } from './car-filter.pipe';
-import { ConsoleService } from './console.service';
+import { CarsService } from './cars.service';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -25,9 +27,11 @@ import { ConsoleService } from './console.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [ConsoleService],
+  providers: [CarsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

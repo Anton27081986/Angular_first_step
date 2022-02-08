@@ -1,5 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { CarsService } from './cars.service';
+
+export interface ICars {
+    name: string,
+    color: string,
+    id: number
+}
+
 
 @Component({
     selector: 'app-root',
@@ -8,55 +17,57 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 })
 
 export class AppComponent implements OnInit {
-    answers = [{
-        type: 'yes',
-        text: 'Да'
-    }, {
-        type: 'no',
-        text: 'Нет'
-    }];
+    public colors = [
+        'red',
+        'blue',
+        'green',
+        'pink',
+        'yellow',
+        'grey'
+    ]
+    // public cars: ICars[] = [];
+    public cars: any;
+    public carName = '';
+    public appTitle;
 
-    charsCount = 5;
-
-    public form: FormGroup
+    constructor(private carsService: CarsService) { }
 
     ngOnInit(): void {
-        this.form = new FormGroup({
-            user: new FormGroup({
-                email: new FormControl('', [Validators.email, Validators.required], this.checkForEmail),
-                pass: new FormControl('', [Validators.required, this.checkForLength.bind(this)]),
-            }),
-            country: new FormControl(''),
-            answer: new FormControl('no')
-        })
+        this.appTitle = this.carsService.getAppTitle();
     }
 
-    onSubmit() {
-        console.log('Submited', this.form);
+    loadCars() {
+        this.cars = this.carsService.getCars()
+
     }
 
-    // {'errorCode': true}
-    // null || undefined
-    checkForLength(control: FormControl) {
-        if (control.value.length <= this.charsCount) {
-            return {
-                'lengthError': true
-            }
-        }
-        return null
+    addCar() {
+        this.carsService
+            .addCar(this.carName)
+            .subscribe((car: ICars) => {
+                console.log(car);
+
+                this.cars.push(car);
+            })
+        this.carName = '';
     }
 
-    checkForEmail(control: FormControl): Promise<any> {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                if (control.value === 'test@gmail.com') {
-                    resolve({
-                        'emailIsUsed': true
-                    });
-                } else {
-                    resolve(null);
-                }
-            }, 3000)
-        });
+    getRendColor() {
+        const num = Math.round(Math.random() * (this.colors.length - 1));
+        return this.colors[num];
+    }
+
+    setNewColor(car: ICars) {
+        this.carsService.changeColor(car, this.getRendColor())
+            .subscribe((data) => {
+                console.log(data);
+            });
+    }
+
+    deleteCar(car: ICars) {
+        this.carsService.deleteItem(car)
+            .subscribe((data) => {
+                this.cars = this.cars.filter(c => c.id !== car.id)
+            });
     }
 }

@@ -1,22 +1,46 @@
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ConsoleService } from "./console.service";
+import { catchError, delay, map, Observable, throwError } from "rxjs";
+import { ICars } from "./app.component";
 
 @Injectable()
 export class CarsService {
 
-    constructor(private consoleService: ConsoleService) {
+    constructor(private http: HttpClient) {
 
     }
 
-    cars = [
-        { name: 'Ford', isSold: false },
-        { name: 'Mazda', isSold: true },
-        { name: 'Bently', isSold: false },
-    ];
+    getCars() {
+        const headers = new HttpHeaders({
+            "Content-Type": 'application/json; charset=utf8'
+        });
+        return this.http.get('http://localhost:3000/cars', {
+            headers: headers
+        })
 
-    addCar() {
-        this.cars.push({ isSold: false, name: 'name' });
-        this.consoleService.log(`Машина ${name} была добавлена`);
+    }
 
+    addCar(carName: string) {
+        const data = {
+            name: carName,
+            color: 'blue'
+        }
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json; charset=utf8'
+        });
+        return this.http.post('http://localhost:3000/cars', data, { headers });
+    }
+
+    changeColor(car: ICars, color: string) {
+        car.color = color;
+        return this.http.put(`http://localhost:3000/cars/${car.id}`, car)
+    }
+
+    deleteItem(car: ICars) {
+        return this.http.delete(`http://localhost:3000/cars/${car.id}`);
+    }
+
+    getAppTitle() {
+        return this.http.get('http://localhost:3000/title')
     }
 }

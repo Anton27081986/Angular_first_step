@@ -14,12 +14,12 @@ interface ICars {
 })
 
 export class AddCarComponent {
-    carName = '';
+    // carName = '';
 
-    constructor(private service: CarsService) { }
+    // constructor(private service: CarsService) { }
 
-    addCar() {
-        this.service.addCar();
-        this.carName = '';
-    }
+    // addCar() {
+    //     this.service.addCar();
+    //     this.carName = '';
+    // }
 }
