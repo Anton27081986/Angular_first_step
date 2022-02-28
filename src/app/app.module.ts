@@ -13,6 +13,11 @@ import { PowPipe } from './pow.pipe';
 import { CarFilterPipe } from './car-filter.pipe';
 import { CarsService } from './cars.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CarsPageComponent } from './cars-page/cars-page.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { CarPageComponent } from './car-page/car-page.component';
+
+
 
 
 @NgModule({
@@ -22,14 +27,18 @@ import { HttpClientModule } from '@angular/common/http';
     AddCarComponent,
     BackgroundDirective,
     PowPipe,
-    CarFilterPipe
+    CarFilterPipe,
+    CarsPageComponent,
+    HomePageComponent,
+    CarPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [CarsService],
   bootstrap: [AppComponent]

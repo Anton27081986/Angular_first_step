@@ -1,5 +1,29 @@
-<div>
-    <h1>{{ appTitle | async }}</h1>
+<div class="container">
+    <nav>
+        <div>
+            <ul>
+                <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/">Главная</a></li>
+                <li routerLinkActive="active"><a [routerLink]="'/cars'">Машины</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="row">
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- <div>
+    <h1 *ngIf="appTitle | async as title">{{ title.value }}</h1>
     <input type="text" [(ngModel)]="carName">
     <hr>
     <button (click)="loadCars()">Показать машины</button>
@@ -13,4 +37,6 @@
             <button (click)="deleteCar(car)">Удалить</button>
         </li>
     </ul>
-</div>
+</div> -->
+
+
